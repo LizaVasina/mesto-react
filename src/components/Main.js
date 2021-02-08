@@ -1,12 +1,12 @@
 import React from 'react';
 
-function Main() {
+function Main(props) {
   return (
     <main className="content">
         <section className="profile">
           <div className="profile__info">
             <span className = "profile__image-wrapper">
-              <button type="button" className="profile__edit-avatar-button"></button>
+              <button type="button" className="profile__edit-avatar-button" onClick={props.onEditAvatar}></button>
               <img className="profile__avatar" src="" alt="Фотография профиля"></img>
             </span>
             <div className="profile__data">
@@ -14,10 +14,10 @@ function Main() {
                 <h1 className="profile__name">Жак-Ив Кусто</h1>
                 <p className="profile__description">Исследователь океана</p>
               </div>
-              <button type="button" className="profile__edit-button"></button>
+              <button type="button" className="profile__edit-button" onClick={props.onEditProfile}></button>
             </div>
           </div>
-          <button type="button" className="profile__add-button"></button>
+          <button type="button" className="profile__add-button" onClick={props.onAddPlace}></button>
         </section>
 
         <section className="photo-grid">
