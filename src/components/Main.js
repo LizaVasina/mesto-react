@@ -1,5 +1,6 @@
 import api from '../utils/Api.js';
 import Card from './Card.js';
+import App from './App.js';
 import React, { useEffect, useState } from 'react';
 
 function Main(props) {
@@ -7,7 +8,6 @@ function Main(props) {
     let [userDescription, setUserDescription] = useState('');
     let [userAvatar, setUserAvatar] = useState('');
     const [cards, setCards] = useState([]);
-
 
     useEffect(() => {
         const data = api.getProfileData();
@@ -23,7 +23,7 @@ function Main(props) {
         const initialCards = api.getInitialCards();
         initialCards.then((cardsInfo) => {
             setCards(Array.from(cardsInfo).map((card) => {
-                return ( <Card card={card} key={card._id} /> );
+                return ( <Card card={card} key={card._id} onCardClick={props.onCardClick}/> );
             }));
         })
     })

@@ -2,6 +2,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
 import './App.css';
 import React, {useState} from 'react';
 
@@ -12,12 +13,21 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isSubmitPopupOpen, setSubmitPopupOpen] = useState(false);
+  const [isImagePopupOpen, setImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  function handleCardClick(cardData) {
+    setImagePopupOpen(true);
+    setSelectedCard(cardData);
+  }
 
   function CloseAllPopups() {
     setEditProfileOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setSubmitPopupOpen(false);
+    setImagePopupOpen(false);
+    setSelectedCard(null);
   }
 
   return (
@@ -37,6 +47,7 @@ function App() {
       onEditAvatar={() => {
         setEditAvatarPopupOpen(true);
       }}
+      onCardClick={handleCardClick}
     />
 
     <Footer></Footer>
@@ -87,6 +98,12 @@ function App() {
       children= {<div><input id="avatar" type="url" placeholder="Ссылка на аватар" name="link" className="popup__text popup__text_type_link" required></input>
       <span id="avatar-error" className="popup__text-error"></span></div>}
       isOpen={isEditAvatarPopupOpen}
+      onClose={CloseAllPopups}
+    />
+
+    <ImagePopup 
+      card={selectedCard}
+      isOpen={isImagePopupOpen}
       onClose={CloseAllPopups}
     />
     </div>

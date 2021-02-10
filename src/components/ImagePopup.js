@@ -1,12 +1,12 @@
 import React from 'react';
 
-function ImagePopup() {
+function ImagePopup(props) {
     return (
-        <div className="popup pic-popup">
+        <div className={`popup pic-popup ${props.isOpen ? "popup_opened" : ''}`}>
             <div className="popup__container popup__container_place_picture">
-            <button type="button" className="popup__close-button popup__close-button_place_picture"></button>
-                <img className="pic-popup__image" src="" alt="Открытое фото из галереи"></img>
-                <p className="pic-popup__caption"></p>
+            <button type="button" className="popup__close-button popup__close-button_place_picture" onClick={props.onClose}></button>
+                <img className="pic-popup__image" src={props.isOpen ? props.card.link : ""} alt="Открытое фото из галереи"></img>
+                <p className="pic-popup__caption">{props.isOpen ? props.card.name : ""}</p>
             </div>
         </div>
     )
