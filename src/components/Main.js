@@ -1,4 +1,4 @@
-import api from '../utils/Api.js';
+import api from '../utils/api.js';
 import Card from './Card.js';
 import App from './App.js';
 import React, { useEffect, useState } from 'react';
