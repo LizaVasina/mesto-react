@@ -1,4 +1,5 @@
 import api from '../utils/Api.js';
+import Card from './Card.js';
 import React, { useEffect, useState } from 'react';
 
 function Main(props) {
@@ -22,20 +23,7 @@ function Main(props) {
         const initialCards = api.getInitialCards();
         initialCards.then((cardsInfo) => {
             setCards(Array.from(cardsInfo).map((card) => {
-                return (
-                <article className="card" key={card._id}>
-                    <button type="button" className="card__delete-button"></button>
-                    <button type="button" className="card__popup-button">
-                        <img className="card__picture" src={`${card.link}`} alt=""></img>
-                    </button>
-                    <div className="card__description">
-                        <h2 className="card__title">{card.name}</h2>
-                        <div className="card__like-section">
-                        <button type="button" className="card__like"></button>
-                        <p className="card__like-number">{card.likes.length}</p>
-                        </div>
-                    </div>
-                    </article>);
+                return ( <Card card={card} key={card._id} /> );
             }));
         })
     })
