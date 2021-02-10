@@ -4,9 +4,9 @@ import App from './App.js';
 import React, { useEffect, useState } from 'react';
 
 function Main(props) {
-    let [userName, setUserName] = useState('');
-    let [userDescription, setUserDescription] = useState('');
-    let [userAvatar, setUserAvatar] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function Main(props) {
                 return ( <Card card={card} key={card._id} onCardClick={props.onCardClick}/> );
             }));
         })
-    })
+    }, []);
   
   return (
     <main className="content">
@@ -49,21 +49,6 @@ function Main(props) {
 
         <section className="photo-grid">
             {cards}
-          <template id="card-template">
-            <article className="card">
-              <button type="button" className="card__delete-button"></button>
-              <button type="button" className="card__popup-button">
-                <img className="card__picture" src="" alt=""></img>
-              </button>
-              <div className="card__description">
-                <h2 className="card__title"></h2>
-                <div className="card__like-section">
-                  <button type="button" className="card__like"></button>
-                  <p className="card__like-number"></p>
-                </div>
-              </div>
-            </article>
-          </template>
         </section>
     </main>  
   );
