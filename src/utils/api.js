@@ -4,10 +4,6 @@ class Api {
     this._headers = options.headers;
   }
 
-  setHello() {
-    console.log('hello');
-  }
-
   handleOriginalResponse (res) {
     if (res.ok) {
       return res.json();
