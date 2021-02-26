@@ -7,36 +7,6 @@ import React, { useEffect, useState } from 'react';
 function Main(props) {
     const currentUser = React.useContext(CurrentUserContext);
 
-    const [cards, setCards] = useState([]);
-
-    useEffect(() => {
-      const initialCards = api.getInitialCards();
-      initialCards.then((cardsInfo) => {
-        setCards(cardsInfo);
-      })
-    }, []);
-
-
-    function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    api.changeLikeCardStatus(card._id, isLiked)
-      .then((newCard) => {
-        const newCards = cards.map(c => c._id === card._id ? newCard : c);
-        setCards(newCards);
-      })
-      .catch((err) => console.log(err));
-    }
-
-    function handleCardDelete(deletedCard) {
-      api.deleteCard(deletedCard._id)
-        .then(() => {
-          const newCards = cards.filter(currentCard => currentCard != deletedCard);
-          setCards(newCards);
-        })
-        .catch((err) => console.log(err));
-    }
-
   return (
     <main className="content">
         <section className="profile">
@@ -57,13 +27,13 @@ function Main(props) {
         </section>
 
         <section className="photo-grid">
-          {Array.from(cards).map((card) => {
+          {props.cards ? Array.from(props.cards).map((card) => {
             return <Card card={card} 
             key={card._id} 
             onCardClick={props.onCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}/>
-          })}
+            onCardLike={props.onCardLike}
+            onCardDelete={props.onCardDelete}/>
+          }) : []}
         </section>
     </main>  
   );

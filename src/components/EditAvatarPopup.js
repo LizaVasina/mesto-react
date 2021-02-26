@@ -1,4 +1,3 @@
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import PopupWithForm from './PopupWithForm.js';
 import React from 'react';
 
@@ -12,6 +11,10 @@ function EditAvatarPopup(props) {
             avatar: avatarRef.current.value
         })
     }
+
+    React.useEffect(() => {
+        avatarRef.current.value = '';
+    }, [props.isOpen]);
 
     return (
         <PopupWithForm 
