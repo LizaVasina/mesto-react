@@ -1,6 +1,7 @@
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
+import Card from './Card.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import api from '../utils/api.js';
@@ -29,6 +30,34 @@ function App() {
       .catch((err) => console.log(err))
   }, []);
 
+  // useEffect(() => {
+  //   // const initialCards = api.getInitialCards();
+  //   // initialCards.then((cardsInfo) => {
+  //   //     setCards(Array.from(cardsInfo).map((card) => {
+  //   //         return ( <Card card={card} 
+  //   //                         key={card._id} 
+  //   //                         onCardClick={handleCardClick}
+  //   //                         onCardLike={handleCardLike}/> );
+  //   //     }));
+  //   // })
+  //   api.getInitialCards()
+  //     .then((cardsInfo) => {
+  //       setCards(cardsInfo);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+  // function handleCardLike(card) {
+  //   const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+  //   api.changeLikeCardStatus(card._id, !isLiked)
+  //     .then((newCard) => {
+  //       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+  //       setCards(newCards);
+  //     })
+  //     .catch((err) => console.log(err));
+  // } 
+
   function handleCardClick(cardData) {
     setIsImagePopupOpen(true);
     setSelectedCard(cardData);
@@ -42,6 +71,8 @@ function App() {
     setIsImagePopupOpen(false);
     setSelectedCard(null);
   }
+
+  
 
   return (
   <CurrentUserContext.Provider value={currentUser}>
