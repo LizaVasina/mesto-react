@@ -3,6 +3,7 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 import Card from './Card.js';
 import PopupWithForm from './PopupWithForm.js';
+import EditProfilePopup from './EditProfilePopup.js';
 import ImagePopup from './ImagePopup.js';
 import api from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -72,7 +73,14 @@ function App() {
     setSelectedCard(null);
   }
 
-  
+  function handleUpdateUser(userInfo) {
+    api.updateProfileData(userInfo.name, userInfo.about)
+      .then((userInfo) => {
+        setCurrentUser(userInfo);
+        CloseAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
   <CurrentUserContext.Provider value={currentUser}>
@@ -97,19 +105,11 @@ function App() {
 
       <Footer></Footer>
 
-      <PopupWithForm 
-        name='info'
-        title='Редактировать профиль'
-        formName='info'
-        buttonName='save'
-        buttonTitle='Сохранить'
+      <EditProfilePopup
         isOpen={isEditProfileOpen}
-        onClose={CloseAllPopups}>
-          <div><input id="name" type="text" minLength="2" maxLength="40" autoComplete="off" placeholder="Имя" name="name" className="popup__text popup__text_type_name" required></input>
-          <span id="name-error" className="popup__text-error"></span>
-          <input id="description" type="text" minLength="2" maxLength="200" autoComplete="off" placeholder="О себе" name="description" className="popup__text popup__text_type_description" required></input>
-          <span id="description-error" className="popup__text-error"></span></div>
-        </PopupWithForm>
+        onClose={CloseAllPopups}
+        onUpdateUser={handleUpdateUser}>
+      </EditProfilePopup>
 
       <PopupWithForm 
         name='photos'
@@ -119,10 +119,10 @@ function App() {
         buttonTitle='Создать'
         isOpen={isAddPlacePopupOpen}
         onClose={CloseAllPopups}>
-          <div><input id="pic-name" type="text" minLength="2" maxLength="30" placeholder="Имя" name="name" className="popup__text popup__text_type_pic-name" required></input>
+          <input id="pic-name" type="text" minLength="2" maxLength="30" placeholder="Имя" name="name" className="popup__text popup__text_type_pic-name" required></input>
           <span id="pic-name-error" className="popup__text-error"></span>
           <input id="link" type="url" placeholder="Ссылка на картинку" name="link" className="popup__text popup__text_type_link" required></input>
-          <span id="link-error" className="popup__text-error"></span></div>
+          <span id="link-error" className="popup__text-error"></span>
         </PopupWithForm>
       
 
@@ -143,8 +143,8 @@ function App() {
         buttonTitle='Сохранить'
         isOpen={isEditAvatarPopupOpen}
         onClose={CloseAllPopups}>
-          <div><input id="avatar" type="url" placeholder="Ссылка на аватар" name="link" className="popup__text popup__text_type_link" required></input>
-          <span id="avatar-error" className="popup__text-error"></span></div>
+          <input id="avatar" type="url" placeholder="Ссылка на аватар" name="link" className="popup__text popup__text_type_link" required></input>
+          <span id="avatar-error" className="popup__text-error"></span>
         </PopupWithForm>
 
       <ImagePopup 
