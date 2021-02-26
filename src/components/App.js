@@ -4,11 +4,13 @@ import Footer from './Footer.js';
 import Card from './Card.js';
 import PopupWithForm from './PopupWithForm.js';
 import EditProfilePopup from './EditProfilePopup.js';
+import EditAvatarPopup from './EditAvatarPopup.js';
 import ImagePopup from './ImagePopup.js';
 import api from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import './App.css';
 import React, {useState, useEffect} from 'react';
+import { specialChars } from '@testing-library/user-event';
 
 
 
@@ -16,7 +18,7 @@ function App() {
   //контекст пользователя
   const [currentUser, setCurrentUser] = useState({});
 
-  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfileOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isSubmitPopupOpen, setIsSubmitPopupOpen] = useState(false);
@@ -30,34 +32,6 @@ function App() {
       })
       .catch((err) => console.log(err))
   }, []);
-
-  // useEffect(() => {
-  //   // const initialCards = api.getInitialCards();
-  //   // initialCards.then((cardsInfo) => {
-  //   //     setCards(Array.from(cardsInfo).map((card) => {
-  //   //         return ( <Card card={card} 
-  //   //                         key={card._id} 
-  //   //                         onCardClick={handleCardClick}
-  //   //                         onCardLike={handleCardLike}/> );
-  //   //     }));
-  //   // })
-  //   api.getInitialCards()
-  //     .then((cardsInfo) => {
-  //       setCards(cardsInfo);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-  //   api.changeLikeCardStatus(card._id, !isLiked)
-  //     .then((newCard) => {
-  //       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-  //       setCards(newCards);
-  //     })
-  //     .catch((err) => console.log(err));
-  // } 
 
   function handleCardClick(cardData) {
     setIsImagePopupOpen(true);
@@ -77,6 +51,15 @@ function App() {
     api.updateProfileData(userInfo.name, userInfo.about)
       .then((userInfo) => {
         setCurrentUser(userInfo);
+        CloseAllPopups();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleUpdateAvatar(avatarInfo) {
+    api.updateProfileAvatar(avatarInfo.avatar)
+      .then((avatarInfo) => {
+        setCurrentUser(avatarInfo);
         CloseAllPopups();
       })
       .catch((err) => console.log(err));
@@ -106,10 +89,16 @@ function App() {
       <Footer></Footer>
 
       <EditProfilePopup
-        isOpen={isEditProfileOpen}
+        isOpen={isEditProfilePopupOpen}
         onClose={CloseAllPopups}
         onUpdateUser={handleUpdateUser}>
       </EditProfilePopup>
+
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={CloseAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}>
+      </EditAvatarPopup>
 
       <PopupWithForm 
         name='photos'
@@ -135,17 +124,7 @@ function App() {
         onClose={CloseAllPopups}
       />
 
-      <PopupWithForm 
-        name='edit-avatar'
-        title='Обновить аватар'
-        formName='avatar'
-        buttonName='update'
-        buttonTitle='Сохранить'
-        isOpen={isEditAvatarPopupOpen}
-        onClose={CloseAllPopups}>
-          <input id="avatar" type="url" placeholder="Ссылка на аватар" name="link" className="popup__text popup__text_type_link" required></input>
-          <span id="avatar-error" className="popup__text-error"></span>
-        </PopupWithForm>
+      
 
       <ImagePopup 
         card={selectedCard}
