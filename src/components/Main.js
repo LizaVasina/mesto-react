@@ -28,11 +28,11 @@ function Main(props) {
 
         <section className="photo-grid">
           {props.cards ? Array.from(props.cards).map((card) => {
-            return <Card card={card} 
+            return (<Card card={card} 
             key={card._id} 
             onCardClick={props.onCardClick}
             onCardLike={props.onCardLike}
-            onCardDelete={props.onCardDelete}/>
+            onCardDelete={props.onCardDelete}/>)
           }) : []}
         </section>
     </main>  

@@ -31,6 +31,7 @@ function App() {
       initialCards.then((cardsInfo) => {
         setCards(cardsInfo);
       })
+      .catch((err) => console.log(err));
     }, []);
 
 
@@ -67,7 +68,7 @@ function App() {
     setSelectedCard(cardData);
   }
 
-  function CloseAllPopups() {
+  function closeAllPopups() {
     setIsEditProfileOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
@@ -80,7 +81,7 @@ function App() {
     api.updateProfileData(userInfo.name, userInfo.about)
       .then((userInfo) => {
         setCurrentUser(userInfo);
-        CloseAllPopups();
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -89,7 +90,7 @@ function App() {
     api.updateProfileAvatar(avatarInfo.avatar)
       .then((avatarInfo) => {
         setCurrentUser(avatarInfo);
-        CloseAllPopups();
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -98,7 +99,7 @@ function App() {
     api.addCard(cardInfo.name, cardInfo.link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
-        CloseAllPopups();
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -131,19 +132,19 @@ function App() {
 
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
-        onClose={CloseAllPopups}
+        onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}>
       </EditProfilePopup>
 
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
-        onClose={CloseAllPopups}
+        onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}>
       </EditAvatarPopup>
 
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
-        onClose={CloseAllPopups}
+        onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}>
       </AddPlacePopup>
       
@@ -154,7 +155,7 @@ function App() {
         buttonName='submit-action'
         buttonTitle='Да'
         isOpen={isSubmitPopupOpen}
-        onClose={CloseAllPopups}
+        onClose={closeAllPopups}
       />
 
       
@@ -162,7 +163,7 @@ function App() {
       <ImagePopup 
         card={selectedCard}
         isOpen={isImagePopupOpen}
-        onClose={CloseAllPopups}
+        onClose={closeAllPopups}
       />
       </div>
       </div>
